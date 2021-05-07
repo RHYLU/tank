@@ -8,9 +8,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class TankFrame extends Frame {
-	private static final int speed = 10;
-	Dir dir = Dir.UP;
-	int x = 100, y = 100; // 设置初始位置
+
+	Tank tank = new Tank(100, 100, Dir.UP);
 
 	// 构造函数
 	public TankFrame() {
@@ -31,24 +30,9 @@ public class TankFrame extends Frame {
 
 	@Override
 	public void paint(Graphics g) {
-		g.fillRect(x, y, 50, 50);
-		// x += 10;
-		// y += 100;
-		switch (dir) {
-		case LEFT:
-			x -= speed;
-			break;
-		case RIGHT:
-			x += speed;
-			break;
-		case UP:
-			y -= speed;
-			break;
-		case DOWN:
-			y += speed;
-			break;
 
-		}
+		tank.paint(g);
+
 	}
 
 	class MyKeyListener extends KeyAdapter {
@@ -62,7 +46,6 @@ public class TankFrame extends Frame {
 		public void keyPressed(KeyEvent e) {
 
 			int key = e.getKeyCode();
-			System.out.println(key);
 			switch (key) {
 			case KeyEvent.VK_LEFT:
 				bL = true;
@@ -107,17 +90,23 @@ public class TankFrame extends Frame {
 		}
 
 		private void setMainTankDir() {
-			if (bL) {
-				dir = Dir.LEFT;
-			}
-			if (bR) {
-				dir = Dir.RIGHT;
-			}
-			if (bD) {
-				dir = Dir.DOWN;
-			}
-			if (bU) {
-				dir = Dir.UP;
+
+			if (!bL && !bD && !bU && !bR) {
+				tank.setMoving(false);
+			} else {
+				tank.setMoving(true);
+				if (bL) {
+					tank.setDir(Dir.LEFT);
+				}
+				if (bR) {
+					tank.setDir(Dir.RIGHT);
+				}
+				if (bD) {
+					tank.setDir(Dir.DOWN);
+				}
+				if (bU) {
+					tank.setDir(Dir.UP);
+				}
 			}
 		}
 
