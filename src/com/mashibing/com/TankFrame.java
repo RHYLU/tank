@@ -1,20 +1,28 @@
 package com.mashibing.com;
 
+import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class TankFrame extends Frame {
 
-	Tank tank = new Tank(100, 100, Dir.UP);
-
+	Tank tank = new Tank(100, 100, Dir.UP,this);
+	List<Bullet> bullets = new ArrayList<>();
+	//Bullet bullet = new Bullet(500, 500, Dir.UP);
+	static int GAME_WIDTH = 1200;
+	static int GAME_HEIGHT =800;
 	// 构造函数
 	public TankFrame() {
 		setTitle("TankWar");// 设置标题
-		setSize(1200, 800);// 设置窗口大小
+		setSize(GAME_WIDTH, GAME_HEIGHT);// 设置窗口大小
 		setResizable(false);// 不可改动窗口大小
 		setVisible(true);// 显示窗口
 
@@ -28,13 +36,40 @@ public class TankFrame extends Frame {
 		});
 	}
 
+	/*
+	 * 防止闪烁
+	 */
+	Image offScreenImage = null;
+
+	@Override
+	public void update(Graphics g) {
+		if (offScreenImage == null) {
+			offScreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
+		}
+		Graphics gOffScreen = offScreenImage.getGraphics();
+		Color c = gOffScreen.getColor();
+		gOffScreen.setColor(Color.BLACK);
+		gOffScreen.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+		gOffScreen.setColor(c);
+		paint(gOffScreen);
+		g.drawImage(offScreenImage, 0, 0, null);
+	}
+	
 	@Override
 	public void paint(Graphics g) {
 
+		Color c = g.getColor();
+		g.setColor(Color.WHITE);
+		g.drawString("子弹的数量："+ bullets.size(), 10, 60);
+		g.setColor(c);
+		
 		tank.paint(g);
-
+		for(int i = 0;i < bullets.size();i++) {
+			bullets.get(i).paint(g);
+		}
 	}
 
+	
 	class MyKeyListener extends KeyAdapter {
 
 		boolean bL = false; // 设置初始方向
@@ -59,8 +94,8 @@ public class TankFrame extends Frame {
 			case KeyEvent.VK_DOWN:
 				bD = true;
 				break;
-
-			default:
+			case KeyEvent.VK_SPACE:
+				tank.fire();
 				break;
 			}
 			setMainTankDir();
