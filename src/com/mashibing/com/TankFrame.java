@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -14,7 +15,8 @@ import java.util.List;
 
 public class TankFrame extends Frame {
 
-	Tank tank = new Tank(100, 100, Dir.UP,this);
+	Tank tank = new Tank(200, 200, Dir.UP,this);
+	//EnemyTank enemy = new EnemyTank(57, 30, Dir.getRandomDir(), this);
 	List<Bullet> bullets = new ArrayList<>();
 	//Bullet bullet = new Bullet(500, 500, Dir.UP);
 	static int GAME_WIDTH = 1200;
@@ -22,10 +24,13 @@ public class TankFrame extends Frame {
 	// 构造函数
 	public TankFrame() {
 		setTitle("TankWar");// 设置标题
+		//this.setUndecorated(true);//不显示标题栏不可取
 		setSize(GAME_WIDTH, GAME_HEIGHT);// 设置窗口大小
 		setResizable(false);// 不可改动窗口大小
 		setVisible(true);// 显示窗口
 
+		 //Insets inset = this.getInsets();		//获取标题框大小
+		// System.out.println(inset);
 		this.addKeyListener(new MyKeyListener());
 
 		addWindowListener(new WindowAdapter() {// 监听Windows，匿名内部类重写
@@ -67,6 +72,7 @@ public class TankFrame extends Frame {
 		for(int i = 0;i < bullets.size();i++) {
 			bullets.get(i).paint(g);
 		}
+		//enemy.paint(g);
 	}
 
 	
@@ -94,9 +100,7 @@ public class TankFrame extends Frame {
 			case KeyEvent.VK_DOWN:
 				bD = true;
 				break;
-			case KeyEvent.VK_SPACE:
-				tank.fire();
-				break;
+			
 			}
 			setMainTankDir();
 		}
@@ -117,9 +121,10 @@ public class TankFrame extends Frame {
 			case KeyEvent.VK_DOWN:
 				bD = false;
 				break;
-
-			default:
+			case KeyEvent.VK_SPACE:
+				tank.fire();
 				break;
+
 			}
 			setMainTankDir();
 		}

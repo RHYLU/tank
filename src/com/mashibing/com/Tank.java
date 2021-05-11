@@ -39,27 +39,56 @@ public class Tank {
 	public void paint(Graphics g) {
 
 		Color color = g.getColor();
-		g.setColor(Color.YELLOW);
-		g.fillRect(x, y, 50, 50);
-		g.setColor(color);
+		switch (dir) {
+		case LEFT:
+			g.drawImage(ResourceMgr.tankL, x, y, null);
+			break;
+		case RIGHT:
+			g.drawImage(ResourceMgr.tankR, x, y, null);
+			break;
+		case UP:
+			g.drawImage(ResourceMgr.tankU, x, y, null);
+			break;
+		case DOWN:
+			g.drawImage(ResourceMgr.tankD, x, y, null);
+			break;
+		}
+		//System.out.println(x+"   "+y);
 		move();
 	}
 
 	private void move() {
 		if(!moving) return;
+		
 		switch (dir) {
 		case LEFT:
-			x -= speed;
-			break;
+			if(x-speed<0) {
+				break;
+			}else {
+				x -= speed;
+				break;
+			}
 		case RIGHT:
-			x += speed;
-			break;
+			if (x+speed>TankFrame.GAME_WIDTH) {
+				break;
+			} else {
+				x += speed;
+				break;
+			}
 		case UP:
-			y -= speed;
-			break;
+			if (y-speed<0) {
+				break;
+			} else {
+				y -= speed;
+				break;
+			}
 		case DOWN:
-			y += speed;
-			break;
+			if (y+speed>TankFrame.GAME_HEIGHT) {
+				break;
+			} else {
+				y += speed;
+				break;
+			}
 		}
 	}
 
