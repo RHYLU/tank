@@ -16,6 +16,7 @@ import java.util.List;
 public class TankFrame extends Frame {
 
 	Tank tank = new Tank(200, 200, Dir.UP,this);
+	List<Tank> enemyList = new ArrayList<>();
 	//EnemyTank enemy = new EnemyTank(57, 30, Dir.getRandomDir(), this);
 	List<Bullet> bullets = new ArrayList<>();
 	//Bullet bullet = new Bullet(500, 500, Dir.UP);
@@ -71,6 +72,9 @@ public class TankFrame extends Frame {
 		tank.paint(g);
 		for(int i = 0;i < bullets.size();i++) {
 			bullets.get(i).paint(g);
+		}
+		for(int i = 0;i <enemyList.size();i++) {
+			enemyList.get(i).paint(g);
 		}
 		//enemy.paint(g);
 	}

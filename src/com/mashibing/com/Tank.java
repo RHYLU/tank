@@ -11,6 +11,8 @@ public class Tank {
 	Dir dir = Dir.UP; // 定义坦克初始方向
 	private boolean moving = false;
 	public TankFrame tFrame = null;
+	public static int WIDTH = ResourceMgr.tankD.getWidth();
+	public static int HEIGHT = ResourceMgr.tankD.getHeight();
 	
 	public boolean isMoving() {
 		return moving;
@@ -96,7 +98,28 @@ public class Tank {
 	 * 发射子弹
 	 */
 	public void fire() {
-		tFrame.bullets.add(new Bullet(this.x, this.y, this.dir,this.tFrame));
+		int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2;
+		int bY = this.y + Tank.HEIGHT/2 -Bullet.HEIGHT/2; 
+//		int bX=0,bY=0;
+//		switch (dir) {
+//		case LEFT:
+//			bX = this.x-Tank.WIDTH/2+Bullet.WIDTH/2;
+//			bY = this.y+Tank.HEIGHT/2-Bullet.HEIGHT/2;
+//			break;
+//		case RIGHT:
+//			bX = this.x +Tank.WIDTH;
+//			bY = this.y +Tank.HEIGHT/2-Bullet.HEIGHT/2;
+//			break;
+//		case UP:
+//			bX = this.x + Tank.WIDTH/2-Bullet.HEIGHT/2;
+//			bY = this.y;
+//			break;
+//		case DOWN:
+//			bX = this.x+Tank.WIDTH/2-Bullet.HEIGHT/2;
+//			bY = this.y+Tank.HEIGHT/2-Bullet.HEIGHT/2;
+//			break;
+//		}
+		tFrame.bullets.add(new Bullet(bX, bY, this.dir,this.tFrame));
 	}
 
 }
