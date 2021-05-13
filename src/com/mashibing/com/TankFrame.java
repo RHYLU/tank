@@ -20,6 +20,7 @@ public class TankFrame extends Frame {
 	//EnemyTank enemy = new EnemyTank(57, 30, Dir.getRandomDir(), this);
 	List<Bullet> bullets = new ArrayList<>();
 	//Bullet bullet = new Bullet(500, 500, Dir.UP);
+	Explode explode = new Explode(100, 100, this);
 	static int GAME_WIDTH = 1200;
 	static int GAME_HEIGHT =800;
 	// 构造函数
@@ -86,6 +87,7 @@ public class TankFrame extends Frame {
 				bullets.get(i).collideWidth(enemyList.get(j));
 			}
 		}
+		explode.paint(g);
 	}
 
 	
