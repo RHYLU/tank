@@ -15,7 +15,7 @@ import java.util.List;
 
 public class TankFrame extends Frame {
 
-	Tank tank = new Tank(200, 200, Dir.UP,this);
+	Tank tank = new Tank(400, 400,Dir.UP, Group.GOOD,this);
 	List<Tank> enemyList = new ArrayList<>();
 	//EnemyTank enemy = new EnemyTank(57, 30, Dir.getRandomDir(), this);
 	List<Bullet> bullets = new ArrayList<>();
@@ -67,7 +67,9 @@ public class TankFrame extends Frame {
 		Color c = g.getColor();
 		g.setColor(Color.WHITE);
 		g.drawString("子弹的数量："+ bullets.size(), 10, 60);
+		g.drawString("敌人的数量："+ enemyList.size(), 300, 60);
 		g.setColor(c);
+		//g.setColor(c);
 		
 		tank.paint(g);
 		for(int i = 0;i < bullets.size();i++) {
@@ -77,6 +79,13 @@ public class TankFrame extends Frame {
 			enemyList.get(i).paint(g);
 		}
 		//enemy.paint(g);
+		
+		for (int i = 0; i < bullets.size(); i++) {
+			for (int j = 0; j < enemyList.size(); j++) {
+
+				bullets.get(i).collideWidth(enemyList.get(j));
+			}
+		}
 	}
 
 	

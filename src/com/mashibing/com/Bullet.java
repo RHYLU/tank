@@ -2,6 +2,7 @@ package com.mashibing.com;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 public class Bullet {
 
@@ -13,12 +14,38 @@ public class Bullet {
 	private Dir dir;
 	private boolean live = true;
 	TankFrame tFrame = null;
+	private Group group =Group.BAD ;
+	
+	public Group getGroup() {
+		return group;
+	}
 
-	public Bullet(int x, int y, Dir dir, TankFrame tf) {
+	public void setGroup(Group group) {
+		this.group = group;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public Bullet(int x, int y, Dir dir,Group group, TankFrame tf) {
 		super();
 		this.x = x;
 		this.y = y;
 		this.dir = dir;
+		this.group = group;
 		this.tFrame = tf;
 	}
 
@@ -65,5 +92,22 @@ public class Bullet {
 		if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT)
 			live = false;
 		
+	}
+
+	public void collideWidth(Tank tank) {
+
+		if(this.group == tank.getGroup()) return;
+		//只用new一个出来，占内存空间
+		Rectangle rectangle1 = new Rectangle(this.x,this.y,WIDTH,HEIGHT);
+		Rectangle rectangle2 = new Rectangle(tank.getX(),tank.getY(),Tank.WIDTH,Tank.HEIGHT);
+		if(rectangle1.intersects(rectangle2)) {
+			this.die();
+			tank.die();
+		}
+	}
+
+	private void die() {
+
+		this.live  = false;
 	}
 }

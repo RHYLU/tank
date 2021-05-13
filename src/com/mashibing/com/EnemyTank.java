@@ -9,7 +9,7 @@ public class EnemyTank extends Tank{
 	private int x,y;
 	final private int speed = 100;
 	public EnemyTank(int x, int y, Dir dir, TankFrame tankFrame) {
-		super(x, y, dir, tankFrame);
+		super(x, y, dir,Group.BAD, tankFrame);
 		this.x = x;
 		this.y = y;
 		move();
